@@ -42,23 +42,7 @@ export function getLocalStore(key, initial) {
     return initial;
   }
   try {
-    const parsed = JSON.parse(data);
-    if (Array.isArray(initial) && Array.isArray(parsed) && initial.length > 0) {
-      const idKey = initial[0].id ? 'id' : initial[0].uid ? 'uid' : null;
-      if (idKey) {
-        let updated = false;
-        for (const item of initial) {
-          if (!parsed.some(p => p[idKey] === item[idKey])) {
-            parsed.push(item);
-            updated = true;
-          }
-        }
-        if (updated) {
-          localStorage.setItem(key, JSON.stringify(parsed));
-        }
-      }
-    }
-    return parsed;
+    return JSON.parse(data);
   } catch (e) {
     return initial;
   }
@@ -413,15 +397,14 @@ export async function deleteOpportunity(id) {
 // APPLICATIONS SERVICES
 // -------------------------------------------------------------
 
-export async function applyToOpportunity({ studentId, opportunityId, recruiterId, ...extra }) {
+export async function applyToOpportunity({ studentId, opportunityId, recruiterId }) {
   const payload = {
     studentId,
     opportunityId,
     recruiterId,
-    status: extra.status || 'applied',
+    status: 'applied',
     appliedAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    ...extra,
   };
 
   if (isFirebaseConfigured && db) {
@@ -597,97 +580,6 @@ const MOCK_CERTIFICATES = [
     verifiedBy: 'Prof. Ananya Roy',
     documentUrl: '',
   },
-  {
-    id: 'cert_pending_1',
-    studentId: 'student_1',
-    skillName: 'Docker',
-    title: 'Docker Certified Associate & Containerization',
-    issuer: 'Docker Inc. / Coursera',
-    credentialId: 'DOCKER-CA-98124',
-    issueDate: '2026-03-01',
-    verified: false,
-    verifiedBy: null,
-    documentUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop',
-    submittedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 'cert_pending_2',
-    studentId: 'student_2',
-    skillName: 'Machine Learning',
-    title: 'Deep Learning Specialization - Stanford Online',
-    issuer: 'Coursera / Stanford',
-    credentialId: 'STANFORD-DL-44821',
-    issueDate: '2026-02-28',
-    verified: false,
-    verifiedBy: null,
-    documentUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop',
-    submittedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 'cert_fake_suspect_3',
-    studentId: 'student_3',
-    skillName: 'Cybersecurity',
-    title: 'Certified Ethical Hacker (CEH v12)',
-    issuer: 'EC-Council',
-    credentialId: 'FAKE-CEH-000999',
-    issueDate: '2026-03-05',
-    verified: false,
-    verifiedBy: null,
-    documentUrl: '',
-    submittedAt: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 'cert_pending_4',
-    studentId: 'student_2',
-    skillName: 'Kubernetes',
-    title: 'Certified Kubernetes Administrator (CKA)',
-    issuer: 'Cloud Native Computing Foundation (CNCF)',
-    credentialId: 'CKA-992140-LINUX',
-    issueDate: '2026-03-04',
-    verified: false,
-    verifiedBy: null,
-    documentUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop',
-    submittedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 'cert_pending_5',
-    studentId: 'student_3',
-    skillName: 'Spring Boot',
-    title: 'Enterprise Java Microservices & Cloud Native Systems',
-    issuer: 'VMware Tanzu / Coursera',
-    credentialId: 'SPRING-BOOT-7712',
-    issueDate: '2026-03-06',
-    verified: false,
-    verifiedBy: null,
-    documentUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop',
-    submittedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 'cert_pending_6',
-    studentId: 'student_1',
-    skillName: 'Python',
-    title: 'Google Professional Data Engineering Specialization',
-    issuer: 'Google Cloud Training',
-    credentialId: 'GCP-DATA-98001',
-    issueDate: '2026-03-08',
-    verified: false,
-    verifiedBy: null,
-    documentUrl: '',
-    submittedAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 'cert_pending_7',
-    studentId: 'student_2',
-    skillName: 'Machine Learning',
-    title: 'TensorFlow Developer Certificate',
-    issuer: 'Google Developers & Coursera',
-    credentialId: 'TF-DEV-55219',
-    issueDate: '2026-03-09',
-    verified: false,
-    verifiedBy: null,
-    documentUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop',
-    submittedAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
-  },
 ];
 
 export async function getStudentCertificates(studentId) {
@@ -724,7 +616,6 @@ export async function verifyStudentCertificate(certificateId, verifierName) {
   const idx = list.findIndex(c => c.id === certificateId);
   if (idx >= 0) {
     list[idx].verified = true;
-    list[idx].status = 'verified';
     list[idx].verifiedBy = verifierName || 'Faculty Evaluator';
     list[idx].verifiedAt = new Date().toISOString();
     setLocalStore(LS_KEYS.CERTIFICATES, list);
@@ -742,21 +633,6 @@ export async function verifyStudentCertificate(certificateId, verifierName) {
       });
       await updateStudentProfile(studentId, { skills: updatedSkills });
     }
-    return list[idx];
-  }
-  return null;
-}
-
-export async function rejectStudentCertificate(certificateId, reason, verifierName, actionType = 'rejected') {
-  const list = getLocalStore(LS_KEYS.CERTIFICATES, MOCK_CERTIFICATES);
-  const idx = list.findIndex(c => c.id === certificateId);
-  if (idx >= 0) {
-    list[idx].verified = false;
-    list[idx].status = actionType; // 'rejected' or 'correction_requested'
-    list[idx].rejectionReason = reason || 'Certificate could not be authenticated against issuer registry.';
-    list[idx].reviewedBy = verifierName || 'Faculty Reviewer';
-    list[idx].reviewedAt = new Date().toISOString();
-    setLocalStore(LS_KEYS.CERTIFICATES, list);
     return list[idx];
   }
   return null;

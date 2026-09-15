@@ -58,7 +58,7 @@ export default function LoginPage() {
         navigate('/recruiter/dashboard');
         break;
       case ROLES.ACADEMICIAN:
-        navigate('/student/dashboard');
+        navigate('/academician/dashboard');
         break;
       case ROLES.INSTITUTION_ADMIN:
         navigate('/institution/dashboard');
@@ -199,6 +199,20 @@ export default function LoginPage() {
                 <div>
                   <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>Recruiter / Industry</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Post job opportunities & discover matched candidates</div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleRoleSelection(ROLES.ACADEMICIAN)}
+                className="btn btn-secondary"
+                style={{ justifyContent: 'flex-start', padding: '14px 18px', textAlign: 'left', borderRadius: '12px' }}
+              >
+                <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa', display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: '14px', flexShrink: 0 }}>
+                  <Building2 size={22} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>Academician / Faculty</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Faculty internships, FDPs & research collaboration</div>
                 </div>
               </button>
 
@@ -467,6 +481,7 @@ export default function LoginPage() {
                   >
                     <option value={ROLES.STUDENT}>Student</option>
                     <option value={ROLES.RECRUITER}>Recruiter / Industry Partner</option>
+                    <option value={ROLES.ACADEMICIAN}>Academician / Faculty Member</option>
                     <option value={ROLES.INSTITUTION_ADMIN}>Institution / T&P Cell Admin</option>
                   </select>
                 </div>

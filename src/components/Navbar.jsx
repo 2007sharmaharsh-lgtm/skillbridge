@@ -181,7 +181,7 @@ export default function Navbar() {
               <button
                 className={`btn btn-sm ${userRole === ROLES.STUDENT ? 'btn-primary' : 'btn-secondary'}`}
                 style={{ padding: '3px 10px', fontSize: '0.72rem', borderRadius: '9999px' }}
-                onClick={async () => { await switchPersona(ROLES.STUDENT); navigate('/student/dashboard'); }}
+                onClick={() => { switchPersona(ROLES.STUDENT); navigate('/student/dashboard'); }}
                 title="Switch to Demo Student"
               >
                 <GraduationCap size={13} /> Student
@@ -189,15 +189,23 @@ export default function Navbar() {
               <button
                 className={`btn btn-sm ${userRole === ROLES.RECRUITER ? 'btn-primary' : 'btn-secondary'}`}
                 style={{ padding: '3px 10px', fontSize: '0.72rem', borderRadius: '9999px' }}
-                onClick={async () => { await switchPersona(ROLES.RECRUITER); navigate('/recruiter/dashboard'); }}
+                onClick={() => { switchPersona(ROLES.RECRUITER); navigate('/recruiter/dashboard'); }}
                 title="Switch to Demo Recruiter"
               >
                 <Briefcase size={13} /> Recruiter
               </button>
               <button
+                className={`btn btn-sm ${userRole === ROLES.ACADEMICIAN ? 'btn-primary' : 'btn-secondary'}`}
+                style={{ padding: '3px 10px', fontSize: '0.72rem', borderRadius: '9999px' }}
+                onClick={() => { switchPersona(ROLES.ACADEMICIAN); navigate('/academician/dashboard'); }}
+                title="Switch to Demo Faculty / Academician"
+              >
+                <GraduationCap size={13} style={{ color: '#f59e0b' }} /> Faculty
+              </button>
+              <button
                 className={`btn btn-sm ${userRole === ROLES.INSTITUTION_ADMIN ? 'btn-primary' : 'btn-secondary'}`}
                 style={{ padding: '3px 10px', fontSize: '0.72rem', borderRadius: '9999px' }}
-                onClick={async () => { await switchPersona(ROLES.INSTITUTION_ADMIN); navigate('/institution/dashboard'); }}
+                onClick={() => { switchPersona(ROLES.INSTITUTION_ADMIN); navigate('/institution/dashboard'); }}
                 title="Switch to Demo Institution Admin"
               >
                 <Building2 size={13} /> Academia
@@ -508,21 +516,21 @@ export default function Navbar() {
                 <button
                   className={`btn btn-sm ${userRole === ROLES.STUDENT ? 'btn-primary' : 'btn-secondary'}`}
                   style={{ padding: '6px 4px', fontSize: '0.7rem', borderRadius: '8px', flexDirection: 'column', gap: '3px', height: 'auto' }}
-                  onClick={async () => { await switchPersona(ROLES.STUDENT); setMobileMenuOpen(false); navigate('/student/dashboard'); }}
+                  onClick={() => { switchPersona(ROLES.STUDENT); setMobileMenuOpen(false); navigate('/student/dashboard'); }}
                 >
                   <GraduationCap size={15} /> Student
                 </button>
                 <button
                   className={`btn btn-sm ${userRole === ROLES.RECRUITER ? 'btn-primary' : 'btn-secondary'}`}
                   style={{ padding: '6px 4px', fontSize: '0.7rem', borderRadius: '8px', flexDirection: 'column', gap: '3px', height: 'auto' }}
-                  onClick={async () => { await switchPersona(ROLES.RECRUITER); setMobileMenuOpen(false); navigate('/recruiter/dashboard'); }}
+                  onClick={() => { switchPersona(ROLES.RECRUITER); setMobileMenuOpen(false); navigate('/recruiter/dashboard'); }}
                 >
                   <Briefcase size={15} /> Recruiter
                 </button>
                 <button
                   className={`btn btn-sm ${userRole === ROLES.INSTITUTION_ADMIN ? 'btn-primary' : 'btn-secondary'}`}
                   style={{ padding: '6px 4px', fontSize: '0.7rem', borderRadius: '8px', flexDirection: 'column', gap: '3px', height: 'auto' }}
-                  onClick={async () => { await switchPersona(ROLES.INSTITUTION_ADMIN); setMobileMenuOpen(false); navigate('/institution/dashboard'); }}
+                  onClick={() => { switchPersona(ROLES.INSTITUTION_ADMIN); setMobileMenuOpen(false); navigate('/institution/dashboard'); }}
                 >
                   <Building2 size={15} /> Academia
                 </button>
@@ -576,17 +584,6 @@ export default function Navbar() {
                   </NavLink>
                   <NavLink to="/recruiter/applicants" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>
                     <Users size={18} /> Candidates & Applicants
-                  </NavLink>
-                </div>
-              )}
-
-              {userRole === ROLES.ACADEMICIAN && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <NavLink to="/academician/dashboard" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>
-                    <GraduationCap size={18} /> Faculty Industrial Hub
-                  </NavLink>
-                  <NavLink to="/academician/curriculum" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>
-                    <BookOpen size={18} /> Curriculum Collaboration
                   </NavLink>
                 </div>
               )}

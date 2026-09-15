@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { ROLES } from '../constants';
 import {
@@ -14,19 +14,13 @@ import {
   BarChart3,
   TrendingUp,
   Building,
-  Building2,
   Zap,
   GraduationCap,
   BookOpen,
-  ShieldCheck,
-  Scale,
-  Layers,
-  Radio,
 } from 'lucide-react';
 
 export default function Sidebar() {
-  const { userRole, switchPersona } = useAuth();
-  const navigate = useNavigate();
+  const { userRole } = useAuth();
 
   const navItemStyle = ({ isActive }) => ({
     display: 'flex',
@@ -86,6 +80,9 @@ export default function Sidebar() {
             <NavLink to="/student/applications" style={navItemStyle}>
               <FileCheck size={18} /> Track Applications
             </NavLink>
+            <NavLink to="/academician/dashboard" style={navItemStyle}>
+              <Building size={18} /> Faculty & Research Portal
+            </NavLink>
             <NavLink to="/student/saved" style={navItemStyle}>
               <Bookmark size={18} /> Saved Roles
             </NavLink>
@@ -108,8 +105,8 @@ export default function Sidebar() {
             }}>
               <Zap size={13} style={{ color: 'var(--primary)' }} /> Academician Portal
             </div>
-            <NavLink to="/academician/dashboard" style={navItemStyle} end>
-              <GraduationCap size={18} /> Faculty Industrial Hub
+            <NavLink to="/academician/dashboard" style={navItemStyle}>
+              <GraduationCap size={18} /> Faculty Internships & FDPs
             </NavLink>
             <NavLink to="/academician/curriculum" style={navItemStyle}>
               <BookOpen size={18} /> Curriculum Collaboration
@@ -187,46 +184,6 @@ export default function Sidebar() {
             </NavLink>
           </div>
         )}
-
-        {/* Global Quick Persona Switcher in Sidebar */}
-        <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-          <div style={{
-            fontSize: '0.68rem',
-            fontWeight: 700,
-            color: 'var(--text-muted)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            padding: '0 8px 10px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px'
-          }}>
-            <Radio size={12} style={{ color: '#f59e0b', animation: 'beaconPulse 1.8s infinite' }} /> Switch Workspace Portal
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px', padding: '0 4px' }}>
-            <button
-              onClick={async () => { await switchPersona(ROLES.STUDENT); navigate('/student/dashboard'); }}
-              className={`btn btn-sm ${userRole === ROLES.STUDENT ? 'btn-primary' : 'btn-secondary'}`}
-              style={{ padding: '6px 4px', fontSize: '0.7rem', borderRadius: '8px', justifyContent: 'center', gap: '4px' }}
-            >
-              <GraduationCap size={13} /> Student
-            </button>
-            <button
-              onClick={async () => { await switchPersona(ROLES.RECRUITER); navigate('/recruiter/dashboard'); }}
-              className={`btn btn-sm ${userRole === ROLES.RECRUITER ? 'btn-primary' : 'btn-secondary'}`}
-              style={{ padding: '6px 4px', fontSize: '0.7rem', borderRadius: '8px', justifyContent: 'center', gap: '4px' }}
-            >
-              <Briefcase size={13} /> Recruiter
-            </button>
-            <button
-              onClick={async () => { await switchPersona(ROLES.INSTITUTION_ADMIN); navigate('/institution/dashboard'); }}
-              className={`btn btn-sm ${userRole === ROLES.INSTITUTION_ADMIN ? 'btn-primary' : 'btn-secondary'}`}
-              style={{ padding: '6px 4px', fontSize: '0.7rem', borderRadius: '8px', justifyContent: 'center', gap: '4px' }}
-            >
-              <Building2 size={13} /> Academia
-            </button>
-          </div>
-        </div>
       </div>
 
       {/* Cyber Telemetry Status Beacon Footer */}

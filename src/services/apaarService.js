@@ -451,18 +451,11 @@ export async function adjudicateBanAppeal(appealId, decision, remarks, authority
 
   const targetAppeal = appeals[appealIdx];
   const isApproved = decision === 'approved';
-  const isInfoRequested = decision === 'info_requested';
 
-  targetAppeal.status = isApproved ? 'approved' : isInfoRequested ? 'info_requested' : 'rejected';
+  targetAppeal.status = isApproved ? 'approved' : 'rejected';
   targetAppeal.adjudicatedAt = new Date().toISOString();
   targetAppeal.adjudicatedBy = authorityName;
-  targetAppeal.adjudicationRemarks = remarks || (
-    isApproved
-      ? 'Justification verified and accepted by Academic Committee. Ban revoked.'
-      : isInfoRequested
-      ? 'Additional supporting documentation / original grade card verification requested from candidate.'
-      : 'Justification rejected. Counterfeit credentials upheld.'
-  );
+  targetAppeal.adjudicationRemarks = remarks || (isApproved ? 'Justification verified and accepted by Academic Committee. Ban revoked.' : 'Justification rejected. Counterfeit credentials upheld.');
 
   appeals[appealIdx] = targetAppeal;
   setLocalStore(LS_KEYS.BAN_APPEALS, appeals);
