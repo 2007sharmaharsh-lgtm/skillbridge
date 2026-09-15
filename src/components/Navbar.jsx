@@ -195,14 +195,6 @@ export default function Navbar() {
                 <Briefcase size={13} /> Recruiter
               </button>
               <button
-                className={`btn btn-sm ${userRole === ROLES.ACADEMICIAN ? 'btn-primary' : 'btn-secondary'}`}
-                style={{ padding: '3px 10px', fontSize: '0.72rem', borderRadius: '9999px' }}
-                onClick={() => { switchPersona(ROLES.ACADEMICIAN); navigate('/academician/dashboard'); }}
-                title="Switch to Demo Faculty / Academician"
-              >
-                <GraduationCap size={13} style={{ color: '#f59e0b' }} /> Faculty
-              </button>
-              <button
                 className={`btn btn-sm ${userRole === ROLES.INSTITUTION_ADMIN ? 'btn-primary' : 'btn-secondary'}`}
                 style={{ padding: '3px 10px', fontSize: '0.72rem', borderRadius: '9999px' }}
                 onClick={() => { switchPersona(ROLES.INSTITUTION_ADMIN); navigate('/institution/dashboard'); }}

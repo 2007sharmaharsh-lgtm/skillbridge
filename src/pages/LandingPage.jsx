@@ -268,13 +268,6 @@ export default function LandingPage() {
                 <Briefcase size={18} style={{ color: 'var(--purple)' }} /> Explore as Recruiter
               </button>
               <button
-                onClick={() => handleQuickDemo(ROLES.ACADEMICIAN)}
-                className="btn btn-secondary"
-                style={{ justifyContent: 'flex-start', padding: '10px 14px', borderRadius: '10px' }}
-              >
-                <GraduationCap size={18} style={{ color: '#f59e0b' }} /> Explore as Faculty
-              </button>
-              <button
                 onClick={() => handleQuickDemo(ROLES.INSTITUTION_ADMIN)}
                 className="btn btn-secondary"
                 style={{ justifyContent: 'flex-start', padding: '10px 14px', borderRadius: '10px' }}
@@ -667,20 +660,6 @@ export default function LandingPage() {
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--text-main)' }}>Explore as Recruiter</div>
                     <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Post jobs & match candidates</div>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => handleQuickDemo(ROLES.ACADEMICIAN)}
-                  className="btn btn-secondary"
-                  style={{ justifyContent: 'flex-start', padding: '12px 16px', textAlign: 'left', borderRadius: '12px' }}
-                >
-                  <div style={{ padding: '8px', borderRadius: '8px', background: 'rgba(245, 158, 11, 0.15)', marginRight: '10px', flexShrink: 0 }}>
-                    <GraduationCap size={20} style={{ color: '#f59e0b' }} />
-                  </div>
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--text-main)' }}>Explore as Faculty</div>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>FDPs, syllabus review & internships</div>
                   </div>
                 </button>
 

@@ -80,36 +80,8 @@ export default function Sidebar() {
             <NavLink to="/student/applications" style={navItemStyle}>
               <FileCheck size={18} /> Track Applications
             </NavLink>
-            <NavLink to="/academician/dashboard" style={navItemStyle}>
-              <Building size={18} /> Faculty & Research Portal
-            </NavLink>
             <NavLink to="/student/saved" style={navItemStyle}>
               <Bookmark size={18} /> Saved Roles
-            </NavLink>
-          </div>
-        )}
-
-        {/* ACADEMICIAN NAVIGATION */}
-        {userRole === ROLES.ACADEMICIAN && (
-          <div>
-            <div style={{
-              fontSize: '0.7rem',
-              fontWeight: 700,
-              color: 'var(--primary)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-              padding: '0 12px 12px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}>
-              <Zap size={13} style={{ color: 'var(--primary)' }} /> Academician Portal
-            </div>
-            <NavLink to="/academician/dashboard" style={navItemStyle}>
-              <GraduationCap size={18} /> Faculty Internships & FDPs
-            </NavLink>
-            <NavLink to="/academician/curriculum" style={navItemStyle}>
-              <BookOpen size={18} /> Curriculum Collaboration
             </NavLink>
           </div>
         )}
