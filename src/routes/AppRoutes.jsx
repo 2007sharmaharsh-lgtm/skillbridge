@@ -22,8 +22,6 @@ import StudentOpportunities from '../pages/student/StudentOpportunities';
 import StudentApplications from '../pages/student/StudentApplications';
 import StudentSaved from '../pages/student/StudentSaved';
 
-// Academician Page
-import AcademicianDashboard from '../pages/academician/AcademicianDashboard';
 
 // Recruiter Pages
 import RecruiterDashboard from '../pages/recruiter/RecruiterDashboard';
@@ -67,19 +65,11 @@ export default function AppRoutes() {
         <Route path="saved" element={<StudentSaved />} />
       </Route>
 
-      {/* ACADEMICIAN / FACULTY ROUTES */}
-      <Route
-        path="/academician"
-        element={
-          <RoleProtectedRoute allowedRoles={[ROLES.ACADEMICIAN, ROLES.STUDENT, ROLES.INSTITUTION_ADMIN]}>
-            <DashboardLayout />
-          </RoleProtectedRoute>
-        }
-      >
-        <Route index element={<Navigate to="/academician/dashboard" replace />} />
-        <Route path="dashboard" element={<AcademicianDashboard />} />
-        <Route path="curriculum" element={<CurriculumCollaboration />} />
-      </Route>
+      {/* ACADEMICIAN / FACULTY SAFE REDIRECTS */}
+      <Route path="/academician" element={<Navigate to="/institution/dashboard" replace />} />
+      <Route path="/academician/*" element={<Navigate to="/institution/dashboard" replace />} />
+      <Route path="/faculty" element={<Navigate to="/institution/dashboard" replace />} />
+      <Route path="/faculty/*" element={<Navigate to="/institution/dashboard" replace />} />
 
       {/* RECRUITER ROUTES */}
       <Route
