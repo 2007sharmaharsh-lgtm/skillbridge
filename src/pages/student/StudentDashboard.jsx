@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   getStudentProfile,
   getOpportunities,
   getStudentApplications,
   getSavedOpportunities,
+  applyToOpportunity,
 } from '../../services/firestoreService';
 import { calculateSkillMatch } from '../../utils/skillMatching';
 import OpportunityCard from '../../components/OpportunityCard';
@@ -33,6 +34,7 @@ import {
 
 export default function StudentDashboard() {
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [opportunities, setOpportunities] = useState([]);
   const [applications, setApplications] = useState([]);
@@ -40,6 +42,20 @@ export default function StudentDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeZoomModal, setActiveZoomModal] = useState(null);
   const [showMockModal, setShowMockModal] = useState(false);
+
+  const handleApply = async (opp) => {
+    if (!currentUser || !opp) return;
+    try {
+      const newApp = await applyToOpportunity({
+        studentId: currentUser.uid,
+        opportunityId: opp.id,
+        recruiterId: opp.recruiterId || 'recruiter_1',
+      });
+      setApplications(prev => [...prev.filter(a => a.opportunityId !== opp.id), newApp]);
+    } catch (e) {
+      console.error('Error applying from dashboard:', e);
+    }
+  };
 
   useEffect(() => {
     async function loadData() {
@@ -403,6 +419,11 @@ export default function StudentDashboard() {
                 key={opp.id}
                 opportunity={opp}
                 matchResult={opp.match}
+                studentSkills={studentSkills}
+                hasApplied={applications.some(a => a.opportunityId === opp.id)}
+                isSaved={saved.some(s => s.opportunityId === opp.id)}
+                onApply={() => handleApply(opp)}
+                onViewDetails={() => navigate(`/student/opportunities?highlight=${opp.id}`)}
               />
             ))}
           </div>

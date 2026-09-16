@@ -202,7 +202,13 @@ export default function OpportunityCard({
                 <button
                   type="button"
                   className="btn btn-secondary btn-sm"
-                  onClick={() => onViewDetails(opportunity)}
+                  onClick={() => {
+                    if (typeof onViewDetails === 'function') {
+                      onViewDetails(opportunity);
+                    } else {
+                      window.location.href = `/student/opportunities?highlight=${opportunity.id}`;
+                    }
+                  }}
                 >
                   Gap Analysis & Details
                 </button>
@@ -227,7 +233,13 @@ export default function OpportunityCard({
                 <button
                   type="button"
                   className="btn btn-primary btn-sm"
-                  onClick={() => onApply(opportunity)}
+                  onClick={() => {
+                    if (typeof onApply === 'function') {
+                      onApply(opportunity);
+                    } else {
+                      window.location.href = `/student/opportunities?apply=${opportunity.id}`;
+                    }
+                  }}
                 >
                   Apply Now <ArrowRight size={14} />
                 </button>

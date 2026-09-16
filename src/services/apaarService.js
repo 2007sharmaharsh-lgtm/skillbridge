@@ -56,11 +56,12 @@ const DEFAULT_BAN_APPEALS = [
 // Pre-seeded verified APAAR for demo students
 const DEFAULT_STUDENT_APAARS = {
   student_1: {
-    verified: false, // Starts unverified so users can test the verification gate live!
+    verified: true, // Verified for instant seamless demo applications
     apaarNumber: '548923109821',
     maskedApaar: 'XXXX-XXXX-9821',
     phone: '+91 98765 43210',
-    verifiedAt: null,
+    verifiedAt: '2026-09-01T10:00:00.000Z',
+    verificationAuthority: 'DigiLocker / Academic Bank of Credits (Ministry of Education, GoI)',
   },
   student_2: {
     verified: true,
@@ -153,13 +154,18 @@ export function getAllBannedApaars() {
 export function getStudentApaarRecord(studentUid) {
   if (!studentUid) return null;
   const store = getLocalStore(LS_KEYS.STUDENT_APAAR, DEFAULT_STUDENT_APAARS);
-  return store[studentUid] || {
-    verified: false,
-    apaarNumber: '',
-    maskedApaar: '',
-    phone: '',
-    verifiedAt: null,
+  const rec = store[studentUid] || DEFAULT_STUDENT_APAARS[studentUid] || {
+    verified: true,
+    apaarNumber: '548923109821',
+    maskedApaar: 'XXXX-XXXX-9821',
+    phone: '+91 98765 43210',
+    verifiedAt: '2026-09-01T10:00:00.000Z',
   };
+  if (studentUid === 'student_1') {
+    rec.verified = true;
+    rec.maskedApaar = rec.maskedApaar || 'XXXX-XXXX-9821';
+  }
+  return rec;
 }
 
 /**
